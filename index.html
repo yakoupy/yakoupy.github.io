@@ -1,3 +1,4 @@
+
 <html lang="fr"> 
 <head>
 <meta charset="UTF-8">
@@ -98,9 +99,8 @@ transform-style: preserve-3d;
 
 .rectangle {
   position: relative;
-  border-radius: 25px;
-  background: rgba(255, 255, 255, 0.21); 
-  border: 1px solid rgba(255, 255, 255, 0.1); 
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.17); 
   backdrop-filter: blur(10px); 
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
 }
@@ -118,6 +118,7 @@ align-items: center;
 padding: 15px;
 gap: 15px;
 z-index: 1001;
+border-radius: 10px;
 }
 .avatar {
 position: absolute;
@@ -147,7 +148,7 @@ align-items: center;
 .subtitle {
 position: absolute;
 top: 140px;
-margin-left: 40px;
+margin-left: 20px;
 font-size: 0.8rem;
 font-weight: bold;
 color: #ffffff;
@@ -355,9 +356,8 @@ position: relative;
 display: flex;
 align-items: center;
 justify-content: space-between;
-background: rgba(255, 255, 255, 0.21);
-border: 1px solid rgba(255,255,255,0.1);
-border-radius: 25px;
+background: rgba(255, 255, 255, 0.17);
+border-radius: 10px;
 padding: 16px 25px;
 backdrop-filter: blur(10px);
 box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
@@ -435,6 +435,8 @@ height: 100vh;
 object-fit: cover;
 z-index: -9999; 
 pointer-events: none; 
+filter: blur(1.5px) brightness(0.3);
+transform: scale(1.1);
 }
 
 @font-face {
@@ -448,7 +450,7 @@ pointer-events: none;
 </head>
 <body>
 <video autoplay muted loop playsinline id="bg-video">
-<source src="https://files.catbox.moe/6m6aw0.mp4" type="video/mp4">
+<source src="https://files.catbox.moe/13vj31.mp4" type="video/mp4">
 </video>
 
 <div class="overlay" id="overlay"><p>★ ★ ☆</p></div>
@@ -546,8 +548,8 @@ const nextBtn=document.getElementById("next");
 const prevBtn=document.getElementById("prev");
 
 const tracks=[
-{src:"https://files.catbox.moe/ieb3np.mp3",title:"Dancing with your eyes closed",cover:"https://i.postimg.cc/tJYynTvQ/1d50d94246ed3f370baa1759b6b876c4.jpg"},
-{src:"https://files.catbox.moe/bf0da2.mp3",title:"Century",cover:"https://i.postimg.cc/52v4mXxZ/esdeekid.jpg"}
+{src:"https://files.catbox.moe/9l3rkv.mp3",title:"Rain",cover:"https://i.postimg.cc/PJ5HGCmv/bleach.jpg"},
+{src:"https://files.catbox.moe/4u4kam.mp3",title:"Nature",cover:"https://i.postimg.cc/Kj8bX1nK/ichigo.jpg"}
 ];
 let currentTrack=0;
 
@@ -609,7 +611,7 @@ const titleText=["@","@N","@No","@No'","@No","@N","@"];
 let it=0;(function animateTitle(){document.title=titleText[it];it=(it+1)%titleText.length;setTimeout(animateTitle,400);})();
 
 const subtitleEl=document.getElementById("subtitle");
-const text="+dm for bios";
+const text="Owner of yskr.lol";
 let idx=0;
 let direction=1;
 function typeWriter(){

@@ -136,8 +136,8 @@ border-radius: 25px;
 position: absolute;
 top: 100px;
 left: 20px;
-width: auto; /* Changé de 90px à auto pour coller au texte */
-text-align: left; /* Aligné à gauche */
+width: auto;
+text-align: left;
 font-size: 1.5rem;
 font-weight: bold;
 color: #ffffff;
@@ -164,7 +164,10 @@ font-weight: normal;
 color: #ffffff;
 cursor: default;
 }
-.username::after {
+
+/* FIX INFOBULLE UID 1 */
+.username .u-text { position: relative; }
+.username .u-text::after {
 content: "UID 1";
 position: absolute;
 bottom: 110%;
@@ -181,11 +184,9 @@ opacity: 0;
 transition: opacity 0.2s ease, transform 0.2s ease;
 pointer-events: none;
 }
-.username:hover::after { opacity: 1; transform: translateX(-50%) translateY(-2px); }
+.username .u-text:hover::after { opacity: 1; transform: translateX(-50%) translateY(-2px); }
+
 .badges {
-position: absolute;
-top: 104px; /* Ajusté légèrement pour l'alignement vertical */
-left: calc(20px + 100% + 10px); /* Positionné dynamiquement : Left du pseudo + largeur texte + 10px */
 display: flex;
 align-items: center;
 gap: 3px;
@@ -447,7 +448,7 @@ html, body, * { cursor: url("images/cursor.png") 12 12, auto !important; }
         <div class="subtitle" id="subtitle"></div>
         <div class="joined"></div>
         <div class="username">
-            USERNAME
+            <span class="u-text">USERNAME</span>
             <div class="badges" style="position: relative; top: 0; left: 20px;">
                 <div class="badge" data-title="Image Host"><img src="https://i.postimg.cc/ZR8J4fXh/imagehost.png"></div>
                 <div class="badge" data-title="Winner"><img src="https://i.postimg.cc/NFbYrKgJ/winner.png"></div>

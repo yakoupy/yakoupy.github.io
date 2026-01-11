@@ -1,0 +1,627 @@
+<html lang="fr"> 
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="https://i.postimg.cc/Zq9KD839/0e5094ca4499a1a83a012da27c8d6475-1-removebg-preview-1.png">
+<link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+font-family: sans-serif;background:none;
+background-size: cover;
+overflow: hidden;
+position: relative;
+}
+body::before {
+content: "";
+position: absolute;
+top: 0; left: 0;
+width: 100%; height: 100%;
+background: rgba(0,0,0,0);
+z-index: 0;
+}
+.overlay {
+position: fixed;
+top: 0; left: 0;
+width: 100%; height: 100%;
+background: rgba(0,0,0,0.89);
+backdrop-filter: blur(8px);
+display: flex;
+justify-content: center;
+align-items: center;
+z-index: 1000;
+cursor: none;
+opacity: 1;
+transition: opacity 0.5s ease;
+}
+* { cursor: url("https://i.postimg.cc/zXn1p2Rq/mo-small-flatlay-product-square-1000x1000-removebg-preview.png"), auto !important; }
+.overlay.fade-out {
+opacity: 0;
+pointer-events: none;
+z-index: -1;
+}
+.overlay p {
+font-size: 1.8rem;
+color: white;
+font-weight: bold;
+letter-spacing: 1px;
+text-align: center;
+user-select: none;
+cursor: default;
+}
+.tilt-container {
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 20px;
+perspective: 1000px;
+position: relative;
+z-index: 1;
+}
+.tilt-group {
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 12px;
+transition: transform 0.15s ease-out;
+transform-style: preserve-3d;
+}
+
+/* --- ANIMATION CORE --- */
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.rectangle, .roblox-card {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+/* Delais un par un */
+.rectangle.top.visible {
+    animation: slideUp 0.8s ease forwards;
+    animation-delay: 0.1s;
+}
+.roblox-card.visible {
+    animation: slideUp 0.8s ease forwards;
+    animation-delay: 0.3s;
+}
+.rectangle.bottom.visible {
+    animation: slideUp 0.8s ease forwards;
+    animation-delay: 0.5s;
+}
+/* ---------------------- */
+
+.rectangle {
+  position: relative;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.21); 
+  border: 1px solid rgba(255, 255, 255, 0.1); 
+  backdrop-filter: blur(10px); 
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.rectangle.top {
+width: 705px;
+height: 265px;
+}
+
+.rectangle.bottom {
+width: 705px;
+height: 100px;
+display: flex;
+align-items: center;
+padding: 15px;
+gap: 15px;
+z-index: 1001;
+}
+.avatar {
+position: absolute;
+margin-top: -40px;
+left: 40px;
+width: 115px;
+height: auto;
+user-select: none;
+pointer-events: none;
+filter: none;
+border-radius: 25px;
+}
+.username {
+position: absolute;
+top: 100px;
+margin-left: 20px;
+width: 90px;
+text-align: center;
+font-size: 1.5rem;
+font-weight: bold;
+color: #ffffff;
+text-shadow: 0 0 4px rgba(77, 77, 77, 0.1), 0 0 8px rgba(255,255,255,0.08);
+cursor: default;
+}
+.subtitle {
+position: absolute;
+top: 140px;
+margin-left: 40px;
+font-size: 0.8rem;
+font-weight: bold;
+color: #ffffff;
+cursor: default;
+}
+.joined {
+position: absolute;
+top: 105px;
+left: 155px;
+font-size: 0.6rem;
+font-weight: normal;
+color: #ffffff;
+cursor: default;
+}
+.username::after {
+content: "UID 1";
+position: absolute;
+bottom: 110%;
+left: 50%;
+transform: translateX(-50%);
+background: rgba(0,0,0,0.95);
+color: white;
+font-size: 11px;
+font-weight: bold;
+padding: 6px 12px;
+border-radius: 10px;
+white-space: nowrap;
+opacity: 0;
+transition: opacity 0.2s ease, transform 0.2s ease;
+pointer-events: none;
+}
+.username:hover::after { opacity: 1; transform: translateX(-50%) translateY(-2px); }
+.badges {
+position: absolute;
+top: 100px;
+left: 100px;
+display: flex;
+align-items: center;
+gap: 3px;
+padding: 3px 7px;
+border-radius: 40px;
+background: rgba(20,20,20,0.05);
+backdrop-filter: blur(0.2px);
+border: 1px solid rgba(255,255,255,0.02);
+user-select: none;
+}
+.badge { position: relative; display: inline-block; }
+.badge img {
+width: 20px; height: 20px;
+pointer-events: auto; user-select: none;
+filter: 
+        brightness(0) invert(1)
+        drop-shadow(0 0 4px rgba(255,255,255,0.4))
+        drop-shadow(0 0 8px rgba(255,255,255,0.25))
+        drop-shadow(0 0 12px rgba(255,255,255,0.15));
+    transition: filter 0.2s ease;
+}
+.badge::after {
+content: attr(data-title);
+position: absolute;
+bottom: 115%;
+left: 50%;
+transform: translateX(-50%);
+background: rgba(0,0,0,0.95);
+color: white;
+font-size: 12px;
+font-weight: bold;
+padding: 7px 10px;
+border-radius: 10px;
+white-space: nowrap;
+opacity: 0;
+pointer-events: none;
+transition: opacity 0.2s ease, transform 0.2s ease;
+z-index: 10;
+}
+.badge:hover::after { opacity: 1; transform: translateX(-50%) translateY(-2px); }
+.separator {
+position: absolute;
+top: 170px;
+left: 50%;
+transform: translateX(-50%);
+width: 90%; height: 2px;
+background: rgba(255, 255, 255, 0.3);
+}
+.socials {
+position: absolute;
+top: 245px; left: 50%;
+transform: translateX(-50%);
+display: flex;
+gap: 10px;
+user-select: none;
+}
+.socials img {
+width: 45px; height: 45px;
+-webkit-filter: grayscale(1) brightness(0) invert(1);
+filter: grayscale(1) brightness(0) invert(1);
+transition: transform 0.2s ease;
+user-select: none; pointer-events: auto;
+}
+.socials img:hover { transform: scale(1.15); }
+.views {
+position: absolute;
+top: 15px; right: 20px;
+display: flex; align-items: center;
+gap: 2px;
+font-size: 11px; font-weight: bold; color: #ffffff;
+}
+.views img { 
+width: 32px;
+height: 32px; 
+user-select: none; 
+pointer-events: none;
+-webkit-filter: grayscale(1) brightness(0) invert(1);
+filter: grayscale(1) brightness(0) invert(1);
+}
+.music-cover {
+width: 70px; height: 70px;
+border-radius: 12px;
+object-fit: cover;
+user-select: none; pointer-events: none;
+}
+.music-info {
+flex: 1;
+display: flex;
+flex-direction: column;
+justify-content: center;
+}
+.music-title {
+font-size: 0.8rem;
+font-weight: bold;
+color: #ffffff;
+margin-bottom: 8px;
+}
+.music-time {
+display: flex;
+align-items: center;
+gap: 15px;
+flex: 1;
+}
+.music-time span {
+font-size: 0.8rem;
+font-weight: bold;
+color: #ffffff;
+}
+.music-time .music-line {
+flex: 1;
+height: 4px;
+background: rgba(255, 255, 255, 0.3);
+border-radius: 3px;
+overflow: hidden;
+margin: 0 5px;
+}
+.music-progress {
+width: 0%;
+height: 100%;
+background: #ffffff;
+}
+.music-controls {
+display: flex;
+align-items: center;
+gap: 12px;
+}
+.music-controls img {
+width: 28px; height: 28px;
+-webkit-filter: grayscale(1) brightness(0) invert(1);
+filter: grayscale(1) brightness(0) invert(1);
+cursor: none;
+z-index: 1002;
+user-select: none;
+-webkit-user-drag: none;
+pointer-events: auto;
+}
+::selection { background: #ffffff; color: #ffffff; }
+.username::selection, .subtitle::selection, .joined::selection { background: #ffffff; color: #ffffff; }
+.badge {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+cursor: none;
+}
+.badge::before {
+content: "";
+position: absolute;
+top: -8px;
+left: -8px;
+right: -8px;
+bottom: -8px;
+}
+#subtitle::after {
+content: "|";               
+display: inline-block;
+margin-left: 4px;
+animation: blink 0.7s infinite;
+}
+@keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
+.trail {
+position: fixed;   
+width: 25px;
+height: 25px;
+pointer-events: none;
+user-select: none;
+transform: scale(1);
+opacity: 1;
+z-index: 9999;   
+animation: trailFade 0.6s forwards;
+}
+@keyframes trailFade { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(0.3); } }
+#bg-video {
+position: fixed;
+top: 0;
+left: 0;
+width: 100vw;
+height: 100vh;
+object-fit: cover;
+z-index: -9999; 
+pointer-events: none; 
+}
+
+.roblox-card {
+position: relative;
+display:flex;
+align-items:center;
+background: rgba(255, 255, 255, 0.21);
+border: 1px solid rgba(255,255,255,0.1);
+border-radius: 25px;
+padding:16px;
+backdrop-filter: blur(10px);
+box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+color:white;
+width:705px;
+height: 100px;
+z-index: 1001;
+}
+
+.roblox-card .top-right { 
+position: absolute;
+top: 5px; 
+right: 15px; 
+display:flex;
+align-items:center;
+}
+.roblox-card .logo-top { width: 32px; height: 32px;  }
+.roblox-card .roblox-text { font-weight:600; color:#646161 !important; font-size:11px; }
+.roblox-card .avatar {
+position: relative;
+top: 0; left: 0;
+width:100px;
+height: 100px; 
+border-radius:50%;
+margin-right: 10px;
+object-fit:cover;
+margin-top: 15px;
+}
+.roblox-card .info { flex:1; display: flex; align-items: center; justify-content: space-between; margin-left: 20px; padding-right: 20px;}
+.roblox-card .name { font-weight:600; font-size:18px; }
+.roblox-card .stats { display:flex; gap: 15px; }
+.roblox-card .stat-item { display:flex; align-items:center; font-size:13px; color:#cfcfcf; }
+.roblox-card .stat-icon { width:14px; height:14px; margin-right:3px; filter: brightness(0) invert(1); }
+.roblox-card .btn { 
+background:#157437; 
+color:white; border:none; 
+padding:10px 20px;
+border-radius:10px; 
+cursor:pointer; 
+font-weight:600; 
+font-size:13px;
+margin-top: 13px;()
+}
+html, body, * { cursor: url("https://i.postimg.cc/K4STdgV6/image-(2).png") 12 12, auto !important; }
+</style>
+</head>
+<body>
+<video autoplay muted loop playsinline id="bg-video">
+<source src="https://files.catbox.moe/6m6aw0.mp4" type="video/mp4">
+</video>
+
+<div class="overlay" id="overlay"><p>★ ★ ☆</p></div>
+
+<div class="tilt-container" id="tilt">
+<div class="tilt-group">
+    
+    <div class="rectangle top">
+        <div class="views" id="view-count">
+            <img src="https://i.postimg.cc/QtFycFSf/view.png">
+            <span>-</span>
+        </div>
+        <img class="avatar" src="https://i.postimg.cc/zvjbZQ9N/0268fe6ea00cd2db40b6b83fe738e8d8.jpg" alt="Avatar">
+        <div class="username">𝘕𝘰'</div>
+        <div class="subtitle" id="subtitle"></div>
+        <div class="joined"></div>
+        <div class="badges">
+            <div class="badge" data-title="Image Host"><img src="https://i.postimg.cc/ZR8J4fXh/imagehost.png"></div>
+            <div class="badge" data-title="Winner"><img src="https://i.postimg.cc/NFbYrKgJ/winner.png"></div>
+            <div class="badge" data-title="Vérifié"><img src="https://i.postimg.cc/hPycDQZh/verify.png"></div>
+            <div class="badge" data-title="Artiste"><img src="https://i.postimg.cc/Z5WZCYXH/artiste.png"></div>
+            <div class="badge" data-title="Gifter"><img src="https://i.postimg.cc/Fzc5bZ0K/gifter.png"></div>
+
+        </div>
+        <div class="separator"></div>
+        <div class="socials"></div>
+    </div>
+
+    <div class="roblox-card" id="roblox-card">
+        <div class="top-right">
+            <img src="https://i.postimg.cc/G20ScJ5H/fe033798649b136ee17373d4881d9578-removebg-preview.png" class="logo-top" alt="Roblox Logo">
+            <span class="roblox-text">Roblox</span>
+        </div>
+        <img id="roblox-avatar" class="avatar" src="https://static.rbxcdn.com/pngs/avatar-placeholder.png" alt="avatar">
+        <div class="info">
+            <div>
+                <div class="name" id="roblox-username">Chargement...</div>
+                <div class="stats">
+                    <span class="stat-item"><img src="https://i.postimg.cc/Vsg4T8mb/1b0626128696bd51131b93a3f404b2a3-removebg-preview.png" class="stat-icon"><span id="roblox-friends">— Friends</span></span>
+                    <span class="stat-item"><img src="https://i.postimg.cc/pLYm00JM/image-removebg-preview.png" class="stat-icon"><span id="roblox-followers">— Followers</span></span>
+                </div>
+            </div>
+            <button class="btn" id="roblox-profileBtn">View Profile</button>
+        </div>
+    </div>
+
+    <div class="rectangle bottom">
+        <img class="music-cover" id="cover" src="" alt="Cover">
+        <div class="music-info">
+            <div class="music-title" id="music-title">TOXIC</div>
+            <div class="music-time">
+                <span id="current-time">0:00</span>
+                <div class="music-line"><div class="music-progress" id="progress"></div></div>
+                <span id="duration">0:00</span>
+                <div class="music-controls">
+                    <img id="prev" src="https://i.postimg.cc/c4zmgfJj/arriere.png" alt="Previous">
+                    <img id="play-pause" src="https://i.postimg.cc/Gh1r0gG3/reprendre.png" alt="Play/Pause">
+                    <img id="next" src="https://i.postimg.cc/KYMsvJrJ/suivant.png" alt="Next">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+
+<audio id="audio"></audio>
+
+<script>
+const overlay=document.getElementById("overlay");
+const tiltContainer=document.getElementById("tilt");
+const tiltGroup=tiltContainer.querySelector(".tilt-group");
+const rectangles=document.querySelectorAll(".rectangle, .roblox-card");
+const audio=document.getElementById("audio");
+const playPauseBtn=document.getElementById("play-pause");
+const progress=document.getElementById("progress");
+const currentTimeEl=document.getElementById("current-time");
+const durationEl=document.getElementById("duration");
+const cover=document.getElementById("cover");
+const musicTitle=document.getElementById("music-title");
+const nextBtn=document.getElementById("next");
+const prevBtn=document.getElementById("prev");
+
+const tracks=[
+{src:"https://files.catbox.moe/ieb3np.mp3",title:"Dancing with your eyes closed",cover:"https://i.postimg.cc/tJYynTvQ/1d50d94246ed3f370baa1759b6b876c4.jpg"},
+{src:"https://files.catbox.moe/bf0da2.mp3",title:"Century",cover:"https://i.postimg.cc/52v4mXxZ/esdeekid.jpg"}
+];
+let currentTrack=0;
+
+function loadTrack(index){
+    currentTrack=(index+tracks.length)%tracks.length;
+    audio.src=tracks[currentTrack].src;
+    cover.src=tracks[currentTrack].cover;
+    musicTitle.textContent=tracks[currentTrack].title;
+    if(!audio.paused) audio.play();
+}
+loadTrack(0);
+
+overlay.addEventListener("click",()=>{
+    overlay.classList.add("fade-out");
+    setTimeout(()=>{
+        rectangles.forEach(rect=>rect.classList.add("visible"));
+    },200);
+    audio.play();
+});
+
+playPauseBtn.addEventListener("click",()=>{
+    if(audio.paused){audio.play(); playPauseBtn.src="https://i.postimg.cc/Gh1r0gG3/reprendre.png";}
+    else{audio.pause(); playPauseBtn.src="https://i.postimg.cc/RhVRfRKr/pause.png";}
+});
+
+nextBtn.addEventListener("click",()=>loadTrack(currentTrack+1));
+prevBtn.addEventListener("click",()=>loadTrack(currentTrack-1));
+
+audio.addEventListener("timeupdate",()=>{
+    const progressPercent=(audio.currentTime/audio.duration)*100;
+    progress.style.width=progressPercent+"%";
+    const m=Math.floor(audio.currentTime/60);
+    const s=Math.floor(audio.currentTime%60).toString().padStart(2,"0");
+    currentTimeEl.textContent=`${m}:${s}`;
+});
+
+audio.addEventListener("loadedmetadata",()=>{
+    const m=Math.floor(audio.duration/60);
+    const s=Math.floor(audio.duration%60).toString().padStart(2,"0");
+    durationEl.textContent=`${m}:${s}`;
+});
+
+document.addEventListener('contextmenu',event=>event.preventDefault());
+
+tiltContainer.addEventListener("mousemove",e=>{
+    const rect=tiltContainer.getBoundingClientRect();
+    const x=(e.clientX-rect.left)/rect.width;
+    const y=(e.clientY-rect.top)/rect.height;
+    const rotateX=(y-0.5)*20;
+    const rotateY=(x-0.5)*-20;
+    tiltGroup.style.transform=`rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+});
+
+tiltContainer.addEventListener("mouseleave",()=>{
+    tiltGroup.style.transform="rotateX(0) rotateY(0)";
+});
+
+const titleText=["@","@N","@No","@No'","@No","@N","@"];
+let i=0;(function animateTitle(){document.title=titleText[i];i=(i+1)%titleText.length;setTimeout(animateTitle,400);})();
+
+const subtitleEl=document.getElementById("subtitle");
+const text="+dm for bios";
+let index=0;
+let direction=1;
+function typeWriter(){
+    subtitleEl.textContent=text.slice(0,index);
+    index+=direction;
+    if(index>text.length){direction=-1; index=text.length; setTimeout(typeWriter,1000); return;}
+    if(index<0){direction=1; index=0; setTimeout(typeWriter,500); return;}
+    setTimeout(typeWriter,direction===1?120:80);
+}
+typeWriter();
+
+const ROBLOX_USER_ID=10211991954;
+async function loadRobloxProfile(){
+    try{
+        const user = await fetch(`https://users.roproxy.com/v1/users/${ROBLOX_USER_ID}`).then(r=>r.json());
+        document.getElementById('roblox-username').textContent=user.displayName||user.name;
+        document.getElementById('roblox-profileBtn').onclick=()=>window.open(`https://www.roblox.com/users/${ROBLOX_USER_ID}/profile`,'_blank');
+        const avatar = await fetch(`https://thumbnails.roproxy.com/v1/users/avatar?userIds=${ROBLOX_USER_ID}&size=150x150&format=Png`).then(r=>r.json());
+        document.getElementById('roblox-avatar').src=avatar.data[0].imageUrl;
+        const friends = await fetch(`https://friends.roproxy.com/v1/users/${ROBLOX_USER_ID}/friends/count`).then(r=>r.json());
+        document.getElementById('roblox-friends').textContent=`${friends.count} Friends`;
+        const followers = await fetch(`https://friends.roproxy.com/v1/users/${ROBLOX_USER_ID}/followers/count`).then(r=>r.json());
+        document.getElementById('roblox-followers').textContent=`${followers.count} Followers`;
+    }catch(e){console.error(e);}
+}
+loadRobloxProfile();
+
+(function(){
+const canvas=document.createElement('canvas');
+const ctx=canvas.getContext('2d');
+canvas.style.position='fixed';
+canvas.style.top='0'; canvas.style.left='0';
+canvas.style.width='100%'; canvas.style.height='100%';
+canvas.style.pointerEvents='none'; canvas.style.zIndex='9999';
+document.body.appendChild(canvas);
+canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+const POINTS_COUNT=15; const K=0.1; const DAMPING=0.7; const EPSILON=0.5;
+const COLOR='rgba(0, 0, 0, 0.3)'; const LINE_WIDTH=3;
+let mouse={x:0,y:0}; let points=[]; let initialized=false;
+document.addEventListener('mousemove',e=>{mouse.x=e.clientX; mouse.y=e.clientY;
+if(!initialized){for(let i=0;i<POINTS_COUNT;i++){points.push({x:mouse.x,y:mouse.y,vx:0,vy:0,offsetX:0,offsetY:0});}initialized=true;}});
+function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);
+if(initialized){for(let i=0;i<points.length;i++){let target=i===0?mouse:points[i-1];let p=points[i];let dx=target.x-p.x;let dy=target.y-p.y;
+if(Math.abs(dx)>EPSILON||Math.abs(dy)>EPSILON){p.vx+=dx*K; p.vy+=dy*K; p.vx*=DAMPING; p.vy*=DAMPING; p.x+=p.vx; p.y+=p.vy;}else{p.vx=p.vy=0; p.x=target.x; p.y=target.y;}}
+ctx.strokeStyle=COLOR; ctx.lineWidth=LINE_WIDTH; ctx.beginPath(); ctx.moveTo(points[0].x,points[0].y);
+for(let i=1;i<points.length;i++){ctx.lineTo(points[i].x,points[i].y);}ctx.stroke();}requestAnimationFrame(animate);}
+animate();
+window.addEventListener('resize',()=>{canvas.width=window.innerWidth; canvas.height=window.innerHeight;});
+})();
+audio.addEventListener("ended", () => {
+    loadTrack(currentTrack + 1);
+    audio.play();
+});
+
+</script>
+</body>
+</html>

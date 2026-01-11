@@ -6,15 +6,17 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-height: 100vh;
-display: flex;
-justify-content: center;
-align-items: center;
-font-family: sans-serif;background:none;
-background-size: cover;
-overflow: hidden;
-position: relative;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "NoFont", sans-serif;
+    background: none;
+    background-size: cover;
+    overflow: hidden;
+    position: relative;
 }
+
 body::before {
 content: "";
 position: absolute;
@@ -414,7 +416,14 @@ font-weight:600;
 font-size:13px;
 margin-top: 13px;()
 }
-html, body, * { cursor: url("https://i.postimg.cc/K4STdgV6/image-(2).png") 12 12, auto !important; }
+html, body, * { cursor: url("images/cursor.png") 12 12, auto !important; }
+@font-face {
+    font-family: "NoFont";
+    src: url("fonts/fonts1.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
 </style>
 </head>
 <body>
